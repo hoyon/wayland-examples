@@ -29,15 +29,15 @@ xdg_shell_unstable = wl_protocols_dir + '/unstable/xdg-shell/xdg-shell-unstable-
 
 examples = {
     '01-wl-shell': {
-        'files': ['./01-wl-shell/wl-shell.cpp'],
+        'files': ['wl-shell.cpp'],
         'protocols': []
     },
     '02-xdg-shell-unstable': {
-        'files': ['./02-xdg-shell-unstable/xdg-shell-unstable.cpp'],
+        'files': ['xdg-shell-unstable.cpp'],
         'protocols': [xdg_shell_unstable]
     },
     '03-xdg-shell-stable': {
-        'files': ['./03-xdg-shell-stable/xdg-shell-stable.cpp'],
+        'files': ['xdg-shell-stable.cpp'],
         'protocols': [xdg_shell_stable]
     },
 }
@@ -50,5 +50,10 @@ foreach name, params : examples
         protocol_files += [header, code]
     endforeach
 
-    executable(name, params.get('files'), protocol_files, dependencies: deps, c_args: c_flags)
+    paths = []
+    foreach file : params.get('files')
+        paths += name + '/' + file
+    endforeach
+
+    executable(name, paths, protocol_files, dependencies: deps, c_args: c_flags)
 endforeach
