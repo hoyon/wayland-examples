@@ -35,14 +35,18 @@ examples = {
     '02-xdg-shell-unstable': {
         'files': ['./02-xdg-shell-unstable/xdg-shell-unstable.cpp'],
         'protocols': [xdg_shell_unstable]
-    }
+    },
+    '03-xdg-shell-stable': {
+        'files': ['./03-xdg-shell-stable/xdg-shell-stable.cpp'],
+        'protocols': [xdg_shell_stable]
+    },
 }
 
 foreach name, params : examples
     protocol_files = []
     foreach protocol : params.get('protocols', [])
-        header = wl_scanner_header.process(xdg_shell_unstable)
-        code = wl_scanner_code.process(xdg_shell_unstable)
+        header = wl_scanner_header.process(protocol)
+        code = wl_scanner_code.process(protocol)
         protocol_files += [header, code]
     endforeach
 
